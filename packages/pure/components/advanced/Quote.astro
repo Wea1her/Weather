@@ -1,34 +1,54 @@
 ---
+/**
+ * 功能说明：本地随机语录组件
+ * 每次访问页面时从预设的语录列表中随机选择一条显示
+ */
+import { Image } from 'astro:assets'
 import { cn } from '../../utils'
+import quoteIcon from '/src/assets/quote/TheDreamer.png'
 
 const { class: className } = Astro.props
 ---
 
-<!-- 用于显示动态获取的引用/名言 -->
+<!-- 用于显示本地随机语录 -->
 
 <quote-component class={cn('not-prose inline-block', className)}>
   <!-- 引用显示容器：圆角边框、阴影效果、横向布局 -->
   <div class='flex flex-row items-center gap-x-3 rounded-full border px-4 py-2 text-sm shadow-sm'>
-    <!-- 动态指示器：带动画的绿色圆点 -->
-    <span class='relative flex items-center justify-center'>
-      <!-- 外层：ping 动画效果 -->
-      <span
-        class='absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-      ></span>
-      <!-- 内层：实心圆点 -->
-      <span class='size-2 rounded-full bg-green-400'></span>
-    </span>
-    <!-- 引用文本显示区域，初始显示加载提示 -->
+    <!-- 语录图标 -->
+    <Image src={quoteIcon} alt='Quote' class='size-5 rounded-full' />
+    <!-- 引用文本显示区域 -->
     <p id='quote-sentence' class='font-medium text-muted-foreground'>Loading...</p>
   </div>
 </quote-component>
 
 <script>
-  // 导入配置文件
-  import config from 'virtual:config'
+  // 本地语录列表，可自行添加或修改
+  const quotes = [
+  '我爱在黄昏看谁的刘海，你爱在清早打谁的领带。',
+  '原谅我的指头在颤抖，是我把黑键当你的手。',
+  '没有最完美的选择，缘分自有它的原则。',
+  '我爱故我在。',
+  '生命中有万事的可能。',
+  '也许是天气，也许是运气，也许是因为有人不放弃。',
+  '从来微风都靠树枝摇摆，从来种子都靠春泥破开。',
+  '相聚离开，都有时候，没有什么会永垂不朽。',
+  '凡人的无奈，像是一袋赤手的红尘。',
+  '青春是一个梦，人生如一阵春风。',
+  '地图有东南西北，爱情却不是绝对。',
+  '一辈子最怕闯过一种祸，是不是蹉跎。',
+  '春风一吹想起谁。',
+  '全世界在暖化，我怕再不可以一起看雪花。',
+  '生命的起伏要认可。',
+  '没有最完美的选择，缘分自有它的原则。',
+  '回忆把我们留了下来。',
+  '雪花白永远都渴望看桃花开。',
+  '有时候转一个弯的幸福，才是最真的幸福。',
+  '上一次看，才二十三。',
+  '有机有机有机有机有机蔬菜好。',
+  '有些花会晚开，有些人要等待。'
 
-  // 获取引用配置
-  const { quote } = config.integ
+  ]
 
   // 定义 Quote 自定义元素类
   class Quote extends HTMLElement {
@@ -36,32 +56,16 @@ const { class: className } = Astro.props
       super()
     }
 
-    /**
-     * 渲染引用文本到页面
-     * @param sentence - 要显示的引用内容
-     */
-    render(sentence: string) {
-      // 获取引用文本元素
+    // 组件挂载时随机选择一条语录显示
+    connectedCallback() {
       const quoteEl = this.querySelector('#quote-sentence') as HTMLElement
       if (!quoteEl) return
-      // 更新文本内容
-      quoteEl.innerText = sentence
-    }
-
-    /**
-     * 组件挂载时的回调函数
-     * 负责从服务器获取引用数据并渲染
-     */
-    connectedCallback() {
-      // 因为 virtual:config 只能以 JSON 字符串形式访问，函数无法工作
-      // 所以需要使用 new Function 动态创建处理函数
-      const targetFunction = new Function('data', 'return (' + quote.target + ')(data)')
-      // 从配置的服务器地址获取引用数据
-      fetch(quote.server)
-        .then((response) => response.json())
-        .then((data) => this.render(targetFunction(data)))
+      // 随机选择一条语录
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)]
+      quoteEl.innerText = randomQuote
     }
   }
+
   // 注册自定义元素
   customElements.define('quote-component', Quote)
 </script>
