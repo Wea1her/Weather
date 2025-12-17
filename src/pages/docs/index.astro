@@ -1,0 +1,26 @@
+---
+/**
+ * 功能说明：文档页面临时占位页
+ * 后续将使用 Starlight 主题替换
+ */
+import { Button } from 'astro-pure/user'
+import PageLayout from '@/layouts/BaseLayout.astro'
+
+const meta = {
+  title: 'Docs',
+  description: 'Documentation - Coming Soon'
+}
+---
+
+<PageLayout {meta}>
+  <Button title='Back' href='/' variant='back' />
+  <main class='mt-6 lg:mt-10'>
+    <div class='animate'>
+      <h1 class='mb-6 mt-6 text-3xl font-medium sm:mt-10'>Documentation</h1>
+      <p class='text-muted-foreground'>Coming soon...</p>
+      <p class='mt-4 text-sm text-muted-foreground'>
+        This page will be powered by Starlight theme.
+      </p>
+    </div>
+  </main>
+</PageLayout>

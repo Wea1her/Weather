@@ -55,11 +55,11 @@ export const theme: ThemeUserConfig = {
   header: {
     menu: [
       { title: 'Blog', link: '/blog' },
+      { title: 'Docs', link: '/docs' },
       { title: 'Projects', link: '/projects' },
       { title: 'Links', link: '/links' },
       { title: 'About', link: '/about' }
-    //   { title: 'Notes', link: '/notes' }  待更新
-     ]
+    ]
   },
 
   /** 配置网站的页脚 */
