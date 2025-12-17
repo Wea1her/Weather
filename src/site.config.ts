@@ -1,22 +1,28 @@
+/**
+ * 功能说明：
+ * 这是 Astro Pure 主题的站点配置文件，用于配置网站的基本信息、主题设置、集成功能等。
+ * 包括网站标题、描述、导航菜单、页脚、评论系统、搜索功能等所有可定制的选项。
+ */
 import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } from 'astro-pure/types'
 
+// 主题配置
 export const theme: ThemeUserConfig = {
-  // [Basic]
-  /** Title for your website. Will be used in metadata and as browser tab title. */
+  // [基础配置]
+  /** 网站标题，将用于元数据和浏览器标签页标题 */
   title: 'Astro Theme Pure',
-  /** Will be used in index page & copyright declaration */
+  /** 作者名称，将用于首页和版权声明 */
   author: 'Pure Lab',
-  /** Description metadata for your website. Can be used in page metadata. */
+  /** 网站描述元数据，可用于页面元数据 */
   description: 'Stay hungry, stay foolish',
-  /** The default favicon for your site which should be a path to an image in the `public/` directory. */
+  /** 网站默认图标，应为 `public/` 目录中图片的路径 */
   favicon: '/favicon/favicon.ico',
-  /** The default social card image for your site which should be a path to an image in the `public/` directory. */
+  /** 网站默认社交卡片图片，应为 `public/` 目录中图片的路径 */
   socialCard: '/images/social-card.png',
-  /** Specify the default language for this site. */
+  /** 指定此站点的默认语言 */
   locale: {
     lang: 'en-US',
     attrs: 'en_US',
-    // Date locale
+    // 日期语言环境
     dateLocale: 'en-US',
     dateOptions: {
       day: 'numeric',
@@ -24,28 +30,28 @@ export const theme: ThemeUserConfig = {
       year: 'numeric'
     }
   },
-  /** Set a logo image to show in the homepage. */
+  /** 设置要在主页上显示的 logo 图片 */
   logo: {
     src: '/src/assets/avatar.png',
     alt: 'Avatar'
   },
 
-  titleDelimiter: '•',
-  prerender: true, // pagefind search is not supported with prerendering disabled
-  npmCDN: 'https://cdn.jsdelivr.net/npm',
+  titleDelimiter: '•', // 标题分隔符
+  prerender: true, // 预渲染，禁用时 pagefind 搜索不受支持
+  npmCDN: 'https://cdn.jsdelivr.net/npm', // NPM CDN 地址
 
-  // Still in test
+  // 仍在测试中
   head: [
-    /* Telegram channel */
+    /* Telegram 频道 */
     // {
     //   tag: 'meta',
     //   attrs: { name: 'telegram:channel', content: '@cworld0_cn' },
     //   content: ''
     // }
   ],
-  customCss: [],
+  customCss: [], // 自定义 CSS
 
-  /** Configure the header of your site. */
+  /** 配置网站的页眉 */
   header: {
     menu: [
       { title: 'Blog', link: '/blog' },
@@ -55,58 +61,59 @@ export const theme: ThemeUserConfig = {
     ]
   },
 
-  /** Configure the footer of your site. */
+  /** 配置网站的页脚 */
   footer: {
-    // Year format
+    // 年份格式
     year: `© ${new Date().getFullYear()}`,
     // year: `© 2019 - ${new Date().getFullYear()}`,
     links: [
-      // Registration link
+      // 备案链接
       {
         title: 'Moe ICP 114514',
         link: 'https://icp.gov.moe/?keyword=114514',
-        style: 'text-sm' // Uno/TW CSS class
+        style: 'text-sm' // Uno/TW CSS 类名
       },
       {
         title: 'Travelling',
         link: 'https://www.travellings.cn/go.html',
         style: 'text-sm'
       },
-      // Privacy Policy link
+      // 隐私政策链接
       {
         title: 'Site Policy',
         link: '/terms/list',
-        pos: 2 // position set to 2 will be appended to copyright line
+        pos: 2 // 位置设为 2 将追加到版权行
       }
     ],
-    /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
+    /** 启用在网站页脚中显示 "Astro & Pure theme powered" 链接 */
     credits: true,
-    /** Optional details about the social media accounts for this site. */
+    /** 此站点社交媒体账户的可选详细信息 */
     social: { github: 'https://github.com/cworld1/astro-theme-pure' }
   },
 
-  // [Content]
+  // [内容配置]
   content: {
-    /** External links configuration */
+    /** 外部链接配置 */
     externalLinks: {
       content: ' ↗',
-      /** Properties for the external links element */
+      /** 外部链接元素的属性 */
       properties: {
         style: 'user-select:none'
       }
     },
-    /** Blog page size for pagination (optional) */
+    /** 博客分页的每页大小（可选） */
     blogPageSize: 8,
-    // Currently support weibo, x, bluesky
-    share: ['weibo', 'x', 'bluesky']
+    // 当前支持 weibo、x、bluesky
+    share: ['weibo', 'x', 'bluesky'] // 分享平台
   }
 }
 
+// 集成功能配置
 export const integ: IntegrationUserConfig = {
-  // [Links]
+  // [友情链接]
   // https://astro-pure.js.org/docs/integrations/links
   links: {
-    // Friend logbook
+    // 友链日志
     logbook: [
       { date: '2025-03-16', content: 'Is there a leakage?' },
       { date: '2025-03-16', content: 'A leakage of what?' },
@@ -114,23 +121,23 @@ export const integ: IntegrationUserConfig = {
       { date: '2025-03-16', content: 'Must be the water.' },
       { date: '2025-03-16', content: "Let's add that to the words of wisdom." }
     ],
-    // Yourself link info
+    // 自己的链接信息
     applyTip: [
       { name: 'Name', val: theme.title },
       { name: 'Desc', val: theme.description || 'Null' },
       { name: 'Link', val: 'https://astro-pure.js.org/' },
       { name: 'Avatar', val: 'https://astro-pure.js.org/favicon/favicon.ico' }
     ],
-    // Cache avatars in `public/avatars/` to improve user experience.
+    // 在 `public/avatars/` 中缓存头像以改善用户体验
     cacheAvatar: false
   },
-  // [Search]
-  pagefind: true,
-  // Add a random quote to the footer (default on homepage footer)
-  // See: https://astro-pure.js.org/docs/integrations/advanced#web-content-render
-  // [Quote]
+  // [搜索]
+  pagefind: true, // 启用 Pagefind 搜索
+  // 在页脚添加随机引用（默认在主页页脚）
+  // 参见：https://astro-pure.js.org/docs/integrations/advanced#web-content-render
+  // [引用]
   quote: {
-    // - Hitokoto
+    // - Hitokoto 一言
     // https://developer.hitokoto.cn/sentence/#%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80
     // server: 'https://v1.hitokoto.cn/?c=i',
     // target: `(data) => (data.hitokoto || 'Error')`
@@ -142,46 +149,47 @@ export const integ: IntegrationUserConfig = {
     server: 'https://dummyjson.com/quotes/random',
     target: `(data) => (data.quote.length > 80 ? \`\${data.quote.slice(0, 80)}...\` : data.quote || 'Error')`
   },
-  // [Typography]
+  // [排版]
   // https://unocss.dev/presets/typography
   typography: {
     class: 'prose text-base',
-    // The style of blockquote font `normal` / `italic` (default to italic in typography)
+    // 引用块字体样式 `normal` / `italic`（typography 默认为斜体）
     blockquoteStyle: 'italic',
-    // The style of inline code block `code` / `modern` (default to code in typography)
+    // 行内代码块样式 `code` / `modern`（typography 默认为 code）
     inlineCodeBlockStyle: 'modern'
   },
-  // [Lightbox]
-  // A lightbox library that can add zoom effect
+  // [灯箱]
+  // 可以添加缩放效果的灯箱库
   // https://astro-pure.js.org/docs/integrations/others#medium-zoom
   mediumZoom: {
-    enable: true, // disable it will not load the whole library
+    enable: true, // 禁用将不加载整个库
     selector: '.prose .zoomable',
     options: {
       className: 'zoomable'
     }
   },
-  // Comment system
+  // 评论系统
   waline: {
-    enable: true,
-    // Server service link
+    enable: true, // 启用 Waline 评论
+    // 服务端链接
     server: 'https://astro-theme-pure-waline.arthals.ink/',
-    // Refer https://waline.js.org/en/guide/features/emoji.html
+    // 参考 https://waline.js.org/en/guide/features/emoji.html
     emoji: ['bmoji', 'weibo'],
-    // Refer https://waline.js.org/en/reference/client/props.html
+    // 参考 https://waline.js.org/en/reference/client/props.html
     additionalConfigs: {
       // search: false,
-      pageview: true,
-      comment: true,
+      pageview: true, // 启用页面浏览量统计
+      comment: true, // 启用评论
       locale: {
         reaction0: 'Like',
         placeholder: 'Welcome to comment. (Email to receive replies. Login is unnecessary)'
       },
-      imageUploader: false
+      imageUploader: false // 禁用图片上传
     }
   }
 }
 
+// 条款内容配置
 export const terms: CardListData = {
   title: 'Terms content',
   list: [
@@ -204,5 +212,6 @@ export const terms: CardListData = {
   ]
 }
 
+// 合并配置并导出
 const config = { ...theme, integ } as Config
 export default config
