@@ -26,3 +26,41 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 <PostLayout {post} {posts} {headings} {remarkPluginFrontmatter}>
   <Content />
 </PostLayout>
+
+<!--
+功能说明：这是一个动态路由页面，用于渲染博客文章的详情页面。
+通过 getStaticPaths 函数生成所有博客文章的静态路径，并为每篇文章渲染对应的页面。
+
+导入 render 函数和 CollectionEntry 类型，用于渲染内容集合
+import { render, type CollectionEntry } from 'astro:content'
+
+导入博客集合获取和排序函数
+import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+导入博客文章布局组件
+import PostLayout from '@/layouts/BlogPost.astro'
+
+启用预渲染（SSG 模式）
+export const prerender = true
+
+生成静态路径函数
+export async function getStaticPaths() {
+  // 获取所有博客文章并按日期排序
+  const posts = sortMDByDate(await getBlogCollection())
+  // 为每篇文章生成路径和属性
+  return posts.map((post) => ({
+    params: { id: post.id }, // 动态路由参数
+    props: { post, posts } // 传递给页面的属性：当前文章和所有文章列表
+  }))
+}
+
+定义页面属性类型
+type Props = {
+  post: CollectionEntry<'blog'> // 当前文章
+  posts: CollectionEntry<'blog'>[] // 所有文章列表
+}
+
+获取页面属性
+const { post, posts } = Astro.props
+渲染文章内容，获取内容组件、标题列表和 remark 插件的 frontmatter
+const { Content, headings, remarkPluginFrontmatter } = await render(post)
+-->
