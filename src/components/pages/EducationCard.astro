@@ -1,0 +1,55 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+import { cn } from 'astro-pure/utils'
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
+  heading?: string
+  subheading?: string
+  date?: string
+  class?: string
+  emblemSrc?: string       // 校徽图片地址（传了才显示）
+  emblemOpacity?: number   // 0~1，背景透明度，默认更淡
+}
+
+const {
+  as: Tag = 'div',
+  class: className,
+  href,
+  heading,
+  subheading,
+  date,
+  emblemSrc
+} = Astro.props
+---
+
+<Tag
+  class={cn(
+    'not-prose block relative overflow-hidden rounded-2xl border bg-muted px-5 py-3',
+    href && 'transition-all hover:border-foreground/25 hover:shadow-sm',
+    className
+  )}
+  href={href}
+>
+  {/* 背景校徽 */}
+  {emblemSrc && (
+    <div class="pointer-events-none absolute inset-0">
+      <img
+        src={emblemSrc}
+        alt=""
+        class="
+          absolute top-1/2 -translate-y-1/2  /* 垂直居中 */
+          right-[0]                      /* 稍微探出右边，露出局部 */
+        "
+      />
+    </div>
+  )}
+  {/* 内容层 */}
+  <div class="relative flex flex-col gap-y-1.5">
+    <div class="flex flex-col gap-y-0.5">
+      <h2 class="text-lg font-medium">{heading}</h2>
+      <p class="text-muted-foreground">{subheading}</p>
+      <p class="text-muted-foreground">{date}</p>
+    </div>
+    <slot />
+  </div>
+</Tag>

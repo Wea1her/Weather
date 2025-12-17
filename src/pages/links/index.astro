@@ -7,7 +7,7 @@ import PageLayout from '@/layouts/CommonPage.astro'
 import FriendList from '@/components/links/FriendList.astro'
 
 const headings = [
-  { depth: 2, slug: 'common-links', text: 'Common Links' },
+  { depth: 2, slug: 'common-links', text: 'Common Links' }, 
   { depth: 2, slug: 'special-links', text: 'Special Links' },
   { depth: 2, slug: 'apply-links', text: 'Apply Links' }
 ]
@@ -19,22 +19,34 @@ const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/publ
 
 <PageLayout title='Links' {headings} comment>
   <p>They're sorted randomly.</p>
+  
+  <!-- 常规友情链接 -->
   <h2 id='common-links'>Common Links</h2>
   <FriendList list={friends[0]} />
+  
+  <!-- 状态异常的链接（可折叠） -->
   <Collapse title='Links with Bad Status'>
     <FriendList list={friends[1]} />
   </Collapse>
+  
+  <!-- 友链历史记录（可折叠） -->
   <Collapse title='Link History Book'>
     <Timeline events={linksConf.logbook} />
   </Collapse>
+  
+  <!-- 特殊友情链接 -->
   <h2 id='special-links'>Special Links</h2>
   <FriendList list={friends[2]} />
 
+  <!-- 申请友链说明 -->
   <h2 id='apply-links'>Apply Links</h2>
   <p>本站信息（点击复制）The site information (click to copy)：</p>
+  
+  <!-- 站点信息区域，点击可复制 -->
   <blockquote class='not-prose grid grid-cols-[auto_1fr] gap-x-2 break-words border-s-4 ps-4'>
     {
       linksConf.applyTip.map(({ name, val }) => {
+        // 生成复制到剪贴板的脚本，并显示 toast 提示
         const script = `navigator.clipboard.writeText('${val}');document.dispatchEvent(new CustomEvent('toast',{detail:{message:'Copied "${val}" to clipboard!'}}))`
         return (
           <>
@@ -48,11 +60,14 @@ const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/publ
     }
   </blockquote>
 
+  <!-- 友链申请方式说明 -->
   <p>
     可通过下方留言或 <a href={linkEditPage} target='_blank'>提交 PR</a> 申请友链。申请说明：<br />
     Apply your link by leaving comment or <a href={linkEditPage} target='_blank'>Submitting a PR</a
     >. Additional info:
   </p>
+  
+  <!-- 友链申请要求列表 -->
   <ul>
     <li>推荐了本站 You've recommended our link on your website</li>
     <li>站点活着且有正式域名 Make sure your site is alive with a formal domain</li>

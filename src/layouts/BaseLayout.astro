@@ -1,19 +1,21 @@
 ---
+// 导入基础组件
 import { Footer, Header, ThemeProvider } from 'astro-pure/components/basic'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
 import config from '@/site-config'
 
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseLayout /> component.
+// 导入全局样式文件，使其在所有使用 <BaseLayout /> 组件的页面上生效
 import '@/assets/styles/global.css'
 import '@/assets/styles/app.css'
 
+// 定义组件属性类型
 interface Props {
   meta: SiteMeta
   highlightColor?: string
 }
 
+// 解构 props 获取页面元数据和高亮颜色
 const {
   meta: { articleDate, description = config.description, ogImage, title },
   highlightColor,
@@ -21,13 +23,22 @@ const {
 } = Astro.props
 ---
 
+<!-- 
+  功能说明：基础布局组件
+  提供网站的基础 HTML 结构，包括头部、页脚、主题切换等功能
+  支持自定义高亮颜色和页面元数据
+-->
+
 <html lang={config.locale.lang}>
   <head>
+    {/* 页面头部元数据 */}
     <BaseHead {articleDate} {description} {ogImage} {title} />
+    {/* 主题切换提供者 */}
     <ThemeProvider />
   </head>
 
   <body class='flex justify-center bg-background text-foreground' {...props}>
+    {/* 可选的高亮渐变背景层 */}
     {
       highlightColor && (
         <div
@@ -37,17 +48,21 @@ const {
         />
       )
     }
+    {/* 主容器：设置最大宽度、响应式内边距和最小高度 */}
     <div
       class='w-full max-w-[70rem] px-4 sm:px-7 lg:px-10 min-h-[100dvh] flex flex-col justify-between'
     >
+      {/* 页面头部导航 */}
       <Header />
+      {/* 主内容区域：使用 slot 插入页面内容 */}
       <div class='flex-1 w-full'>
         <slot />
       </div>
+      {/* 页面底部 */}
       <Footer />
     </div>
 
-    {/* Set highlight color */}
+    {/* 设置高亮颜色的全局样式 */}
     <style define:vars={{ highlightColor }}>
       :global(.highlight) {
         --highlight-fg: color-mix(

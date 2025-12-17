@@ -18,14 +18,20 @@ type Props = {
 
 const { stats } = Astro.props as Props
 
+/**
+ * 从 Substats API 获取统计数量
+ * @param item - 统计项对象
+ */
 async function fetchCount(item: SubstatsItem) {
   if (!item.api) return
   try {
+    // 调用 Substats API 获取实时数据
     const response = await fetch(`https://api.swo.moe/stats/${item.api}`)
     const data = await response.json()
     if (data.failed) {
       throw new Error(data.message)
     } else {
+      // 将获取的数量赋值给 item
       item.count = data.count
     }
   } catch (error) {
@@ -33,23 +39,32 @@ async function fetchCount(item: SubstatsItem) {
   }
 }
 
+// 并行获取所有统计数据
 await Promise.all(stats.map(fetchCount))
 ---
+<!-- 社交平台统计数据展示卡片 -->
 
+
+<!-- 统计卡片网格容器：响应式布局，小屏单列，大屏双列 -->
 <div class='grid grid-cols-1 gap-3 rounded-xl border p-2 sm:grid-cols-2 sm:p-3'>
   {
     stats.map(({ link, platform, icon, color, count, text }) => (
+      // 统计项链接：可点击跳转到对应平台
       <a
         class='group text-muted-foreground no-underline'
         href={link}
         target='_blank'
         rel='noopener noreferrer'
       >
+        {/* 统计卡片：hover 时显示边框和背景 */}
         <div class='flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:border-border hover:bg-muted'>
+          {/* 平台图标 */}
           {icon && <Icon name={icon as iconsType} color={color} />}
+          {/* 平台名称：hover 时变为主题色 */}
           <div class='flex-1 text-foreground transition-colors group-hover:text-primary'>
             {platform}
           </div>
+          {/* 统计数量显示 */}
           {count ? (
             <div class='flex items-center gap-1.5'>
               <samp>{count}</samp>
@@ -63,6 +78,7 @@ await Promise.all(stats.map(fetchCount))
     ))
   }
 </div>
+{/* 版权信息 */}
 <div class='mt-2 text-right text-sm'>
   Display real-time; powered by <a
     class='text-muted-foreground'
