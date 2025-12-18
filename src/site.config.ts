@@ -89,7 +89,7 @@ export const theme: ThemeUserConfig = {
     /** 启用在网站页脚中显示 "Astro & Pure theme powered" 链接 */
     credits: true,
     /** 此站点社交媒体账户的可选详细信息 */
-    social: { github: 'https://github.com/yexiangluna' }
+    social: { github: 'https://github.com/yexiangluna', telegram: 'https://t.me/jaycupup' }
   },
 
   // [内容配置]
@@ -115,13 +115,7 @@ export const integ: IntegrationUserConfig = {
   // https://astro-pure.js.org/docs/integrations/links
   links: {
     // 友链日志
-    logbook: [
-      { date: '2025-03-16', content: 'Is there a leakage?' },
-      { date: '2025-03-16', content: 'A leakage of what?' },
-      { date: '2025-03-16', content: 'I have a full seat of water, like, full of water!' },
-      { date: '2025-03-16', content: 'Must be the water.' },
-      { date: '2025-03-16', content: "Let's add that to the words of wisdom." }
-    ],
+    logbook: [],
     // 自己的链接信息
     applyTip: [
       { name: 'Name', val: theme.title },
