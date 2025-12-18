@@ -1,11 +1,10 @@
 ---
-import { render, type CollectionEntry } from 'astro:content'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
 import bcryptjs from 'bcryptjs'
 import CryptoJS from 'crypto-js'
 
 import { MediumZoom } from 'astro-pure/advanced'
 import { TOC } from 'astro-pure/components/pages'
-import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/ContentLayout.astro'
 import PasswordProtection from '@/components/PasswordProtection.astro'
@@ -15,7 +14,9 @@ import DocsContents from './DocsContents.astro'
 export const prerender = true
 
 export async function getStaticPaths() {
-  const posts = sortMDByDate(await getBlogCollection('docs'))
+  const posts = await getCollection('docs')
+  // 按 order 排序
+  posts.sort((a, b) => a.data.order - b.data.order)
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post }
@@ -37,14 +38,14 @@ const isEncrypted = post.data.encrypted && post.data.password
 
 if (isEncrypted) {
   // 获取原始 markdown 内容进行加密
-  const contentToEncrypt = post.body
+  const contentToEncrypt = post.body ?? ''
 
   // 使用 AES 加密内容
-  encryptedContent = CryptoJS.AES.encrypt(contentToEncrypt, post.data.password).toString()
+  encryptedContent = CryptoJS.AES.encrypt(contentToEncrypt, post.data.password!).toString()
 
   // 生成密码哈希（用于验证）
   const saltRounds = 10
-  passwordHash = bcryptjs.hashSync(post.data.password, saltRounds)
+  passwordHash = bcryptjs.hashSync(post.data.password!, saltRounds)
 }
 
 const editPath = `https://github.com/cworld1/astro-theme-pure/edit/main/${post.filePath}`

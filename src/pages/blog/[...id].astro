@@ -32,14 +32,14 @@ const isEncrypted = post.data.encrypted && post.data.password
 
 if (isEncrypted) {
   // 获取原始 markdown 内容进行加密
-  const contentToEncrypt = post.body
+  const contentToEncrypt = post.body ?? ''
 
   // 使用 AES 加密内容
-  encryptedContent = CryptoJS.AES.encrypt(contentToEncrypt, post.data.password).toString()
+  encryptedContent = CryptoJS.AES.encrypt(contentToEncrypt, post.data.password!).toString()
 
   // 生成密码哈希（用于验证）
   const saltRounds = 10
-  passwordHash = bcryptjs.hashSync(post.data.password, saltRounds)
+  passwordHash = bcryptjs.hashSync(post.data.password!, saltRounds)
 }
 ---
 

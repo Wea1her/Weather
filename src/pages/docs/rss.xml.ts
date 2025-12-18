@@ -1,6 +1,6 @@
 import type { AstroGlobal, ImageMetadata } from 'astro'
 import { getImage } from 'astro:assets'
-import type { CollectionEntry } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 import rss from '@astrojs/rss'
 import type { Root } from 'mdast'
 import rehypeStringify from 'rehype-stringify'
@@ -9,8 +9,6 @@ import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 import config from 'virtual:config'
-
-import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 
 // Get dynamic import of images as a map collection
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
@@ -54,7 +52,9 @@ const renderContent = async (post: CollectionEntry<'docs'>, site: URL) => {
 }
 
 const GET = async (context: AstroGlobal) => {
-  const allPostsByDate = sortMDByDate(await getBlogCollection('docs')) as CollectionEntry<'docs'>[]
+  const allPosts = await getCollection('docs')
+  // 按 order 排序
+  allPosts.sort((a, b) => a.data.order - b.data.order)
   const siteUrl = context.site ?? new URL(import.meta.env.SITE)
 
   return rss({
@@ -68,7 +68,7 @@ const GET = async (context: AstroGlobal) => {
     description: config.description,
     site: import.meta.env.SITE,
     items: await Promise.all(
-      allPostsByDate.map(async (post) => ({
+      allPosts.map(async (post) => ({
         link: `/docs/${post.id}`,
         content: await renderContent(post, siteUrl),
         ...post.data

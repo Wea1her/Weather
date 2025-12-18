@@ -1,13 +1,14 @@
 ---
-import { type CollectionEntry } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
-import { getBlogCollection } from 'astro-pure/server'
 import { cn } from 'astro-pure/utils'
 
 export const prerender = true
 export const partial = true
 
-const docsCollection = (await getBlogCollection('docs')) as CollectionEntry<'docs'>[]
+const docsCollection = await getCollection('docs')
+// 按 order 排序
+docsCollection.sort((a, b) => a.data.order - b.data.order)
 // Group docs by id first part (setup, integrations, advanced, etc.)
 const docsByCate = docsCollection.reduce((acc: { [key: string]: typeof docsCollection }, doc) => {
   const id = doc.id.split('/')[0]
