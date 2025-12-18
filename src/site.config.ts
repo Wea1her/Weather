@@ -167,7 +167,7 @@ export const integ: IntegrationUserConfig = {
   waline: {
     enable: true, // 启用 Waline 评论
     // 服务端链接
-    server: 'https://astro-theme-pure-waline.arthals.ink/',
+    server: 'https://waline-e2bx1ch8d-yexianglunas-projects.vercel.app/',
     // 参考 https://waline.js.org/en/guide/features/emoji.html
     emoji: ['bmoji', 'weibo'],
     // 参考 https://waline.js.org/en/reference/client/props.html
