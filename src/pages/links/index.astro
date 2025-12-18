@@ -17,8 +17,8 @@ const linksConf = config.integ.links
 const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/public/links.json'
 ---
 
-<PageLayout title='Links' {headings} comment>
-  <p>They're sorted randomly.</p>
+<PageLayout title='Friend Links' {headings} comment>
+  <p>怎么可能有顺序呢，当然是随机的~ It's random</p>
   
   <!-- 常规友情链接 -->
   <h2 id='common-links'>Common Links</h2>
@@ -33,7 +33,7 @@ const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/publ
   <Collapse title='Link History Book'>
     <Timeline events={linksConf.logbook} />
   </Collapse>
-  
+
   <!-- 特殊友情链接 -->
   <h2 id='special-links'>Special Links</h2>
   <FriendList list={friends[2]} />
