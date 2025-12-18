@@ -120,8 +120,8 @@ export const integ: IntegrationUserConfig = {
     applyTip: [
       { name: 'Name', val: theme.title },
       { name: 'Desc', val: theme.description || 'Null' },
-      { name: 'Link', val: 'https://astro-pure.js.org/' },
-      { name: 'Avatar', val: 'https://astro-pure.js.org/favicon/favicon.ico' }
+      { name: 'Link', val: 'https://www.0xweather.com/' },
+      { name: 'Avatar', val: 'https://gravatar.com/avatar/8c75e73e81e63a2c8c88d4e4ec0bb0a2' }
     ],
     // 在 `public/avatars/` 中缓存头像以改善用户体验
     cacheAvatar: false
